@@ -1,0 +1,57 @@
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+import { SignerClientService } from '../signer-client/signer-client.service';
+
+@Injectable()
+export class PlayerService {
+  private readonly logger = new Logger(PlayerService.name);
+
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly signer: SignerClientService,
+  ) {}
+
+async findOrCreate(walletAddress: string, web3AuthId?: string) {
+  const existing = await this.prisma.player.findUnique({
+    where: { walletAddress },
+  });
+  if (existing) return existing;
+
+  // Create player first to get UUID
+  const player = await this.prisma.player.create({
+    data: { walletAddress, web3AuthId, soulBalance: '0', godsBalance: '0' },
+  });
+
+  // Create custodial wallet — signer returns the on-chain address
+  const { address: custodialAddress } = await this.signer.createWallet(player.id);
+
+  // Update player record with the actual custodial wallet address
+  const updated = await this.prisma.player.update({
+    where: { id: player.id },
+    data: { walletAddress: custodialAddress },
+  });
+
+  this.logger.log(`Player created: ${player.id}, custodial wallet: ${custodialAddress}`);
+  return updated;
+}
+
+  async getProfile(playerId: string) {
+    const player = await this.prisma.player.findUnique({
+      where: { id: playerId },
+      include: {
+        leaderboard: true,
+        nfts: true,
+        achievements: true,
+      },
+    });
+    if (!player) throw new NotFoundException('Player not found');
+    return player;
+  }
+
+  async updateSoulBalance(playerId: string, newBalance: string) {
+    return this.prisma.player.update({
+      where: { id: playerId },
+      data: { soulBalance: newBalance },
+    });
+  }
+}

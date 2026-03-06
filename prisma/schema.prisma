@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  moduleFormat  = "commonjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Player {
+  id             String   @id @default(uuid())
+  walletAddress  String   @unique
+  externalWallet String?
+  web3AuthId     String?  @unique
+  soulBalance    String   @default("0") // stored as string to avoid bigint issues
+  godsBalance    String   @default("0") // read from chain, not earned in-game
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  sessions         Session[]
+  leaderboard      LeaderboardEntry[]
+  nfts             PlayerNFT[]
+  achievements     SbtAchievement[]
+}
+
+model Session {
+  id          String        @id @default(uuid())
+  playerId    String
+  gameId      Int
+  modeId      Int
+  startedAt   DateTime      @default(now())
+  endedAt     DateTime?
+  soulEarned  String        @default("0")
+  status      SessionStatus @default(ACTIVE)
+
+  player Player @relation(fields: [playerId], references: [id])
+}
+
+model LeaderboardEntry {
+  id             String   @id @default(uuid())
+  playerId       String
+  gameId         Int
+  modeId         Int
+  score          Int      @default(0)
+  gamesPlayed    Int      @default(0)
+  roundsSurvived Int      @default(0)
+  enemiesKilled  Int      @default(0)
+  updatedAt      DateTime @updatedAt
+
+  player Player @relation(fields: [playerId], references: [id])
+
+  @@unique([playerId, gameId, modeId])
+}
+
+model MarketplaceItem {
+  id          String  @id @default(uuid())
+  typeId      Int     @unique
+  name        String
+  metadataURI String
+  rarity      Int     @default(0)
+  gameId      Int
+  active      Boolean @default(true)
+
+  listing MarketplaceListing?
+}
+
+model MarketplaceListing {
+  id           String  @id @default(uuid())
+  itemId       String  @unique
+  buyPriceSoul String
+  buyPriceGods String
+  listed       Boolean @default(true)
+
+  item MarketplaceItem @relation(fields: [itemId], references: [id])
+}
+
+model PlayerNFT {
+  id          String    @id @default(uuid())
+  playerId    String
+  tokenId     String    @unique
+  typeId      Int
+  isRented    Boolean   @default(false)
+  rentedUntil DateTime?
+  createdAt   DateTime  @default(now())
+
+  player Player @relation(fields: [playerId], references: [id])
+}
+
+model SbtAchievement {
+  id       String   @id @default(uuid())
+  playerId String
+  tokenId  String   @unique
+  typeId   Int
+  name     String
+  mintedAt DateTime @default(now())
+
+  player Player @relation(fields: [playerId], references: [id])
+}
+
+enum SessionStatus {
+  ACTIVE
+  COMPLETED
+  ABANDONED
+}
