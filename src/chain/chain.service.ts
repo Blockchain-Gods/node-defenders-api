@@ -52,16 +52,14 @@ export class ChainService implements OnApplicationBootstrap, OnApplicationShutdo
     }
   }
 
- private async registerListeners(contracts: typeof fujiDeployment.contracts) {
+private async registerListeners(contracts: typeof fujiDeployment.contracts) {
   const soulToken = SoulToken__factory.connect(contracts.SoulToken, this.provider);
   const upgradeNFT = UpgradeNFT__factory.connect(contracts.UpgradeNFT, this.provider);
 
-  // SOUL BatchMinted — audit log
-  soulToken.on(soulToken.filters.BatchMinted(), (recipients, amounts, totalMinted) => {
+  soulToken.on(soulToken.filters.BatchMinted(), (recipients, _amounts, totalMinted) => {
     this.logger.log(`BatchMinted: ${recipients.length} recipients, total: ${totalMinted}`);
   });
 
-  // UpgradeNFT Transfer (mint) — on-chain confirmation
   upgradeNFT.on(
     upgradeNFT.filters.Transfer(ethers.ZeroAddress),
     async (_from, to, tokenId) => {
@@ -69,9 +67,8 @@ export class ChainService implements OnApplicationBootstrap, OnApplicationShutdo
     },
   );
 
-  // Note: ERC-4907 rental expiry is time-based, no on-chain event emitted.
-  // Expired rentals are checked via UpgradeNFT.userOf() returning zero address.
-  // A cron job to sweep expired rentals can be added post-beta.
+  // Sync marketplace listings from chain on every reconnect
+  await this.syncMarketplaceListings();
 }
 
   // Read-only RPC helpers
@@ -84,4 +81,42 @@ export class ChainService implements OnApplicationBootstrap, OnApplicationShutdo
     const balance = await soulToken.balanceOf(walletAddress);
     return balance.toString();
   }
+
+ private async syncMarketplaceListings() {
+  const { contracts } = fujiDeployment;
+  const upgradeNFT = UpgradeNFT__factory.connect(contracts.UpgradeNFT, this.provider);
+  const marketplace = Marketplace__factory.connect(contracts.Marketplace, this.provider);
+
+  const totalTypes = await upgradeNFT.totalUpgradeTypes();
+
+  const items: Array<{
+    typeId: number;
+    name: string;
+    metadataURI: string;
+    rarity: number;
+    gameId: number;
+    buyPriceSoul: string;
+    buyPriceGods: string;
+  }> = [];
+
+  for (let typeId = 1n; typeId <= totalTypes; typeId++) {
+    const upgradeType = await upgradeNFT.upgradeTypes(typeId);
+    const price = await marketplace.prices(typeId);
+
+    if (!upgradeType.active || !price.listed) continue;
+
+    items.push({
+      typeId: Number(typeId),
+      name: upgradeType.name,
+      metadataURI: upgradeType.metadataURI,
+      rarity: Number(upgradeType.rarity),
+      gameId: Number(upgradeType.gameId),
+      buyPriceSoul: price.buyPriceSoul.toString(),
+      buyPriceGods: price.buyPriceGods.toString(),
+    });
+  }
+
+  await this.marketplace.syncListings(items);
+  this.logger.log(`Synced ${items.length} marketplace listings from chain`);
+}
 }

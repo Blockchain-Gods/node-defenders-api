@@ -81,12 +81,14 @@ async earnSoul(sessionId: string, amount: string) {
       data: { soulBalance: newBalance },
     });
 
-    // Queue SOUL mint via signer
-    await this.signer.queueSoulMint({
-      playerId,
-      amount: earned.toString(),
-    });
-
+    // Queue SOUL mint via signer - use when app scales
+    // await this.signer.queueSoulMint({
+    //   playerId,
+    //   amount: earned.toString(),
+    // });
+if (earned > 0n) {
+  await this.signer.mintSoulNow({ playerId, amount: earned.toString() });
+}
     // Clean up Redis
     await this.redis.del(key);
 

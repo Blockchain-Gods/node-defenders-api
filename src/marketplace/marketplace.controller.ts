@@ -35,4 +35,5 @@ export class MarketplaceController {
   async rent(@Body() body: RentDto, @CurrentPlayer() player: JwtPayload) {
     return this.marketplace.rent(player.sub, body.typeId, body.tierId, body.paymentToken);
   }
+  
 }
