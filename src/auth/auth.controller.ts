@@ -5,6 +5,11 @@ import { AuthService,type LoginDto } from './auth.service';
 export class AuthController {
   constructor(private readonly auth: AuthService) {}
 
+@Post('guest')
+async guest() {
+  return this.auth.loginAsGuest();
+}
+
   @Post('login')
   async login(@Body() body: LoginDto) {
     return this.auth.login(body);

@@ -11,6 +11,29 @@ export class PlayerService {
     private readonly signer: SignerClientService,
   ) {}
 
+async createGuest() {
+  const placeholder = `guest-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
+  const player = await this.prisma.player.create({
+    data: {
+      walletAddress: placeholder,
+      isGuest: true,
+      soulBalance: '0',
+      godsBalance: '0',
+    },
+  });
+
+  const { address: custodialAddress } = await this.signer.createWallet(player.id);
+
+  const updated = await this.prisma.player.update({
+    where: { id: player.id },
+    data: { walletAddress: custodialAddress },
+  });
+
+  this.logger.log(`Guest player created: ${updated.id}`);
+  return updated;
+}
+
 async findOrCreate(walletAddress: string, web3AuthId?: string) {
   const existing = await this.prisma.player.findUnique({
     where: { walletAddress },

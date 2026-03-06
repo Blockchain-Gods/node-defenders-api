@@ -25,6 +25,17 @@ export class AuthService {
     private readonly players: PlayerService,
   ) {}
 
+  async loginAsGuest(): Promise<{ token: string; playerId: string; wallet: string }> {
+  const player = await this.players.createGuest();
+
+  const token = this.jwt.sign(
+    { sub: player.id, wallet: player.walletAddress },
+    { secret: this.config.get<string>('jwt.secret') },
+  );
+
+  return { token, playerId: player.id, wallet: player.walletAddress };
+}
+
   async login(dto: LoginDto): Promise<{ token: string; playerId: string; wallet: string }> {
     let walletAddress: string;
     let web3AuthId: string | undefined;

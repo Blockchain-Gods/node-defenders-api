@@ -32,6 +32,9 @@ node-defenders-signer
 
 ### Key design decisions
 
+**Guest play**
+Players can start playing immediately without connecting a wallet. A guest player record and custodial wallet are created silently on "Play as Guest". Guest JWT is stored in localStorage and reused on return visits. Guests can upgrade to a full account via Web3Auth or SIWE at any time — progress merge is planned post-beta.
+
 **Custodial wallets for beta**
 Players never manage keys or pay gas. On first login, the API creates a player record and calls the signer to generate a custodial wallet. The custodial wallet address becomes the player's on-chain identity. The migration path post-beta is ERC-4337 account abstraction.
 
@@ -92,7 +95,7 @@ SOUL balance in Postgres is the source of truth during gameplay. On-chain balanc
 ## Database schema
 
 ```
-Player             — identity, custodial wallet address, SOUL/GODS balance
+Player             — identity, custodial wallet address, SOUL/GODS balance, guest flag
 Session            — game session lifecycle, SOUL earned per session
 LeaderboardEntry   — cumulative per-player per-mode stats
 MarketplaceItem    — upgrade type registry (synced from contracts)
@@ -140,6 +143,7 @@ cp .env.example .env
 | `WEB3AUTH_JWKS_URL` | Web3Auth JWKS URL for token verification |
 | `GAME_ID` | Node Defenders game ID (default: `1`) |
 | `SURVIVAL_MODE_ID` | Survival mode ID (default: `1`) |
+| `JWT_GUEST_EXPIRES_IN` | Guest token expiry (default: `30d`) |
 
 ### TypeChain types
 
@@ -197,6 +201,9 @@ Authenticate via Web3Auth or SIWE. Returns API JWT.
 
 #### `POST /auth/dev/token` *(development only)*
 Issues a JWT for a fresh player with a generated custodial wallet. No body required. Returns 401 in production.
+
+#### `POST /auth/guest`
+Creates a guest player with a generated custodial wallet. No body required. JWT stored client-side and reused on return visits. Guest progress is preserved for 30 days.
 
 ---
 
