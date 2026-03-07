@@ -93,6 +93,8 @@ export class MarketplaceService {
       gameId: number;
       buyPriceSoul: string;
       buyPriceGods: string;
+      rentPriceSoul:string;
+      rentPriceGods:string;
     }>,
   ) {
     for (const item of items) {
@@ -110,11 +112,16 @@ export class MarketplaceService {
 
       await this.prisma.marketplaceListing.upsert({
         where: { itemId: existing.id },
-        update: { buyPriceSoul: item.buyPriceSoul, buyPriceGods: item.buyPriceGods, listed: true },
+        update: { buyPriceSoul: item.buyPriceSoul, buyPriceGods: item.buyPriceGods,
+             rentPriceSoul: item.rentPriceSoul,   // new
+    rentPriceGods: item.rentPriceGods,   // new
+            listed: true },
         create: {
           itemId: existing.id,
           buyPriceSoul: item.buyPriceSoul,
           buyPriceGods: item.buyPriceGods,
+           rentPriceSoul: item.rentPriceSoul,   // new
+    rentPriceGods: item.rentPriceGods,   // new
         },
       });
     }

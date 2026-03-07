@@ -29,6 +29,8 @@ export type MarketplaceListingMinAggregateOutputType = {
   itemId: string | null
   buyPriceSoul: string | null
   buyPriceGods: string | null
+  rentPriceSoul: string | null
+  rentPriceGods: string | null
   listed: boolean | null
 }
 
@@ -37,6 +39,8 @@ export type MarketplaceListingMaxAggregateOutputType = {
   itemId: string | null
   buyPriceSoul: string | null
   buyPriceGods: string | null
+  rentPriceSoul: string | null
+  rentPriceGods: string | null
   listed: boolean | null
 }
 
@@ -45,6 +49,8 @@ export type MarketplaceListingCountAggregateOutputType = {
   itemId: number
   buyPriceSoul: number
   buyPriceGods: number
+  rentPriceSoul: number
+  rentPriceGods: number
   listed: number
   _all: number
 }
@@ -55,6 +61,8 @@ export type MarketplaceListingMinAggregateInputType = {
   itemId?: true
   buyPriceSoul?: true
   buyPriceGods?: true
+  rentPriceSoul?: true
+  rentPriceGods?: true
   listed?: true
 }
 
@@ -63,6 +71,8 @@ export type MarketplaceListingMaxAggregateInputType = {
   itemId?: true
   buyPriceSoul?: true
   buyPriceGods?: true
+  rentPriceSoul?: true
+  rentPriceGods?: true
   listed?: true
 }
 
@@ -71,6 +81,8 @@ export type MarketplaceListingCountAggregateInputType = {
   itemId?: true
   buyPriceSoul?: true
   buyPriceGods?: true
+  rentPriceSoul?: true
+  rentPriceGods?: true
   listed?: true
   _all?: true
 }
@@ -152,6 +164,8 @@ export type MarketplaceListingGroupByOutputType = {
   itemId: string
   buyPriceSoul: string
   buyPriceGods: string
+  rentPriceSoul: string
+  rentPriceGods: string
   listed: boolean
   _count: MarketplaceListingCountAggregateOutputType | null
   _min: MarketplaceListingMinAggregateOutputType | null
@@ -181,6 +195,8 @@ export type MarketplaceListingWhereInput = {
   itemId?: Prisma.StringFilter<"MarketplaceListing"> | string
   buyPriceSoul?: Prisma.StringFilter<"MarketplaceListing"> | string
   buyPriceGods?: Prisma.StringFilter<"MarketplaceListing"> | string
+  rentPriceSoul?: Prisma.StringFilter<"MarketplaceListing"> | string
+  rentPriceGods?: Prisma.StringFilter<"MarketplaceListing"> | string
   listed?: Prisma.BoolFilter<"MarketplaceListing"> | boolean
   item?: Prisma.XOR<Prisma.MarketplaceItemScalarRelationFilter, Prisma.MarketplaceItemWhereInput>
 }
@@ -190,6 +206,8 @@ export type MarketplaceListingOrderByWithRelationInput = {
   itemId?: Prisma.SortOrder
   buyPriceSoul?: Prisma.SortOrder
   buyPriceGods?: Prisma.SortOrder
+  rentPriceSoul?: Prisma.SortOrder
+  rentPriceGods?: Prisma.SortOrder
   listed?: Prisma.SortOrder
   item?: Prisma.MarketplaceItemOrderByWithRelationInput
 }
@@ -202,6 +220,8 @@ export type MarketplaceListingWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.MarketplaceListingWhereInput | Prisma.MarketplaceListingWhereInput[]
   buyPriceSoul?: Prisma.StringFilter<"MarketplaceListing"> | string
   buyPriceGods?: Prisma.StringFilter<"MarketplaceListing"> | string
+  rentPriceSoul?: Prisma.StringFilter<"MarketplaceListing"> | string
+  rentPriceGods?: Prisma.StringFilter<"MarketplaceListing"> | string
   listed?: Prisma.BoolFilter<"MarketplaceListing"> | boolean
   item?: Prisma.XOR<Prisma.MarketplaceItemScalarRelationFilter, Prisma.MarketplaceItemWhereInput>
 }, "id" | "itemId">
@@ -211,6 +231,8 @@ export type MarketplaceListingOrderByWithAggregationInput = {
   itemId?: Prisma.SortOrder
   buyPriceSoul?: Prisma.SortOrder
   buyPriceGods?: Prisma.SortOrder
+  rentPriceSoul?: Prisma.SortOrder
+  rentPriceGods?: Prisma.SortOrder
   listed?: Prisma.SortOrder
   _count?: Prisma.MarketplaceListingCountOrderByAggregateInput
   _max?: Prisma.MarketplaceListingMaxOrderByAggregateInput
@@ -225,6 +247,8 @@ export type MarketplaceListingScalarWhereWithAggregatesInput = {
   itemId?: Prisma.StringWithAggregatesFilter<"MarketplaceListing"> | string
   buyPriceSoul?: Prisma.StringWithAggregatesFilter<"MarketplaceListing"> | string
   buyPriceGods?: Prisma.StringWithAggregatesFilter<"MarketplaceListing"> | string
+  rentPriceSoul?: Prisma.StringWithAggregatesFilter<"MarketplaceListing"> | string
+  rentPriceGods?: Prisma.StringWithAggregatesFilter<"MarketplaceListing"> | string
   listed?: Prisma.BoolWithAggregatesFilter<"MarketplaceListing"> | boolean
 }
 
@@ -232,6 +256,8 @@ export type MarketplaceListingCreateInput = {
   id?: string
   buyPriceSoul: string
   buyPriceGods: string
+  rentPriceSoul?: string
+  rentPriceGods?: string
   listed?: boolean
   item: Prisma.MarketplaceItemCreateNestedOneWithoutListingInput
 }
@@ -241,6 +267,8 @@ export type MarketplaceListingUncheckedCreateInput = {
   itemId: string
   buyPriceSoul: string
   buyPriceGods: string
+  rentPriceSoul?: string
+  rentPriceGods?: string
   listed?: boolean
 }
 
@@ -248,6 +276,8 @@ export type MarketplaceListingUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   buyPriceSoul?: Prisma.StringFieldUpdateOperationsInput | string
   buyPriceGods?: Prisma.StringFieldUpdateOperationsInput | string
+  rentPriceSoul?: Prisma.StringFieldUpdateOperationsInput | string
+  rentPriceGods?: Prisma.StringFieldUpdateOperationsInput | string
   listed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   item?: Prisma.MarketplaceItemUpdateOneRequiredWithoutListingNestedInput
 }
@@ -257,6 +287,8 @@ export type MarketplaceListingUncheckedUpdateInput = {
   itemId?: Prisma.StringFieldUpdateOperationsInput | string
   buyPriceSoul?: Prisma.StringFieldUpdateOperationsInput | string
   buyPriceGods?: Prisma.StringFieldUpdateOperationsInput | string
+  rentPriceSoul?: Prisma.StringFieldUpdateOperationsInput | string
+  rentPriceGods?: Prisma.StringFieldUpdateOperationsInput | string
   listed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -265,6 +297,8 @@ export type MarketplaceListingCreateManyInput = {
   itemId: string
   buyPriceSoul: string
   buyPriceGods: string
+  rentPriceSoul?: string
+  rentPriceGods?: string
   listed?: boolean
 }
 
@@ -272,6 +306,8 @@ export type MarketplaceListingUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   buyPriceSoul?: Prisma.StringFieldUpdateOperationsInput | string
   buyPriceGods?: Prisma.StringFieldUpdateOperationsInput | string
+  rentPriceSoul?: Prisma.StringFieldUpdateOperationsInput | string
+  rentPriceGods?: Prisma.StringFieldUpdateOperationsInput | string
   listed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -280,6 +316,8 @@ export type MarketplaceListingUncheckedUpdateManyInput = {
   itemId?: Prisma.StringFieldUpdateOperationsInput | string
   buyPriceSoul?: Prisma.StringFieldUpdateOperationsInput | string
   buyPriceGods?: Prisma.StringFieldUpdateOperationsInput | string
+  rentPriceSoul?: Prisma.StringFieldUpdateOperationsInput | string
+  rentPriceGods?: Prisma.StringFieldUpdateOperationsInput | string
   listed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -293,6 +331,8 @@ export type MarketplaceListingCountOrderByAggregateInput = {
   itemId?: Prisma.SortOrder
   buyPriceSoul?: Prisma.SortOrder
   buyPriceGods?: Prisma.SortOrder
+  rentPriceSoul?: Prisma.SortOrder
+  rentPriceGods?: Prisma.SortOrder
   listed?: Prisma.SortOrder
 }
 
@@ -301,6 +341,8 @@ export type MarketplaceListingMaxOrderByAggregateInput = {
   itemId?: Prisma.SortOrder
   buyPriceSoul?: Prisma.SortOrder
   buyPriceGods?: Prisma.SortOrder
+  rentPriceSoul?: Prisma.SortOrder
+  rentPriceGods?: Prisma.SortOrder
   listed?: Prisma.SortOrder
 }
 
@@ -309,6 +351,8 @@ export type MarketplaceListingMinOrderByAggregateInput = {
   itemId?: Prisma.SortOrder
   buyPriceSoul?: Prisma.SortOrder
   buyPriceGods?: Prisma.SortOrder
+  rentPriceSoul?: Prisma.SortOrder
+  rentPriceGods?: Prisma.SortOrder
   listed?: Prisma.SortOrder
 }
 
@@ -348,6 +392,8 @@ export type MarketplaceListingCreateWithoutItemInput = {
   id?: string
   buyPriceSoul: string
   buyPriceGods: string
+  rentPriceSoul?: string
+  rentPriceGods?: string
   listed?: boolean
 }
 
@@ -355,6 +401,8 @@ export type MarketplaceListingUncheckedCreateWithoutItemInput = {
   id?: string
   buyPriceSoul: string
   buyPriceGods: string
+  rentPriceSoul?: string
+  rentPriceGods?: string
   listed?: boolean
 }
 
@@ -378,6 +426,8 @@ export type MarketplaceListingUpdateWithoutItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   buyPriceSoul?: Prisma.StringFieldUpdateOperationsInput | string
   buyPriceGods?: Prisma.StringFieldUpdateOperationsInput | string
+  rentPriceSoul?: Prisma.StringFieldUpdateOperationsInput | string
+  rentPriceGods?: Prisma.StringFieldUpdateOperationsInput | string
   listed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -385,6 +435,8 @@ export type MarketplaceListingUncheckedUpdateWithoutItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   buyPriceSoul?: Prisma.StringFieldUpdateOperationsInput | string
   buyPriceGods?: Prisma.StringFieldUpdateOperationsInput | string
+  rentPriceSoul?: Prisma.StringFieldUpdateOperationsInput | string
+  rentPriceGods?: Prisma.StringFieldUpdateOperationsInput | string
   listed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -395,6 +447,8 @@ export type MarketplaceListingSelect<ExtArgs extends runtime.Types.Extensions.In
   itemId?: boolean
   buyPriceSoul?: boolean
   buyPriceGods?: boolean
+  rentPriceSoul?: boolean
+  rentPriceGods?: boolean
   listed?: boolean
   item?: boolean | Prisma.MarketplaceItemDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["marketplaceListing"]>
@@ -404,6 +458,8 @@ export type MarketplaceListingSelectCreateManyAndReturn<ExtArgs extends runtime.
   itemId?: boolean
   buyPriceSoul?: boolean
   buyPriceGods?: boolean
+  rentPriceSoul?: boolean
+  rentPriceGods?: boolean
   listed?: boolean
   item?: boolean | Prisma.MarketplaceItemDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["marketplaceListing"]>
@@ -413,6 +469,8 @@ export type MarketplaceListingSelectUpdateManyAndReturn<ExtArgs extends runtime.
   itemId?: boolean
   buyPriceSoul?: boolean
   buyPriceGods?: boolean
+  rentPriceSoul?: boolean
+  rentPriceGods?: boolean
   listed?: boolean
   item?: boolean | Prisma.MarketplaceItemDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["marketplaceListing"]>
@@ -422,10 +480,12 @@ export type MarketplaceListingSelectScalar = {
   itemId?: boolean
   buyPriceSoul?: boolean
   buyPriceGods?: boolean
+  rentPriceSoul?: boolean
+  rentPriceGods?: boolean
   listed?: boolean
 }
 
-export type MarketplaceListingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "itemId" | "buyPriceSoul" | "buyPriceGods" | "listed", ExtArgs["result"]["marketplaceListing"]>
+export type MarketplaceListingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "itemId" | "buyPriceSoul" | "buyPriceGods" | "rentPriceSoul" | "rentPriceGods" | "listed", ExtArgs["result"]["marketplaceListing"]>
 export type MarketplaceListingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   item?: boolean | Prisma.MarketplaceItemDefaultArgs<ExtArgs>
 }
@@ -446,6 +506,8 @@ export type $MarketplaceListingPayload<ExtArgs extends runtime.Types.Extensions.
     itemId: string
     buyPriceSoul: string
     buyPriceGods: string
+    rentPriceSoul: string
+    rentPriceGods: string
     listed: boolean
   }, ExtArgs["result"]["marketplaceListing"]>
   composites: {}
@@ -875,6 +937,8 @@ export interface MarketplaceListingFieldRefs {
   readonly itemId: Prisma.FieldRef<"MarketplaceListing", 'String'>
   readonly buyPriceSoul: Prisma.FieldRef<"MarketplaceListing", 'String'>
   readonly buyPriceGods: Prisma.FieldRef<"MarketplaceListing", 'String'>
+  readonly rentPriceSoul: Prisma.FieldRef<"MarketplaceListing", 'String'>
+  readonly rentPriceGods: Prisma.FieldRef<"MarketplaceListing", 'String'>
   readonly listed: Prisma.FieldRef<"MarketplaceListing", 'Boolean'>
 }
     

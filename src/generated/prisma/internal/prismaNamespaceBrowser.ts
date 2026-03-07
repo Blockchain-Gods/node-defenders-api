@@ -138,6 +138,8 @@ export const MarketplaceListingScalarFieldEnum = {
   itemId: 'itemId',
   buyPriceSoul: 'buyPriceSoul',
   buyPriceGods: 'buyPriceGods',
+  rentPriceSoul: 'rentPriceSoul',
+  rentPriceGods: 'rentPriceGods',
   listed: 'listed'
 } as const
 

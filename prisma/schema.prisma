@@ -77,6 +77,8 @@ model MarketplaceListing {
   itemId       String  @unique
   buyPriceSoul String
   buyPriceGods String
+  rentPriceSoul String  @default("0") 
+  rentPriceGods String  @default("0")   
   listed       Boolean @default(true)
 
   item MarketplaceItem @relation(fields: [itemId], references: [id])

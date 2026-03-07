@@ -97,6 +97,8 @@ private async registerListeners(contracts: typeof fujiDeployment.contracts) {
     gameId: number;
     buyPriceSoul: string;
     buyPriceGods: string;
+    rentPriceSoul: string;
+    rentPriceGods:string;
   }> = [];
 
   for (let typeId = 1n; typeId <= totalTypes; typeId++) {
@@ -113,6 +115,8 @@ private async registerListeners(contracts: typeof fujiDeployment.contracts) {
       gameId: Number(upgradeType.gameId),
       buyPriceSoul: price.buyPriceSoul.toString(),
       buyPriceGods: price.buyPriceGods.toString(),
+      rentPriceSoul: price.rentPriceSoul.toString(),   
+      rentPriceGods: price.rentPriceGods.toString(),  
     });
   }
 
