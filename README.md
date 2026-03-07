@@ -311,4 +311,5 @@ JavaScript's `number` type loses precision above 2^53. SOUL uses 18 decimal plac
 
 - [node-defenders-contracts](https://github.com/Blockchain-Gods/node-defenders-contracts) — Solidity contracts + deploy scripts
 - [node-defenders-signer](https://github.com/Blockchain-Gods/node-defenders-signer) — Isolated signing service
+- [node-defenders-frontend](https://github.com/Blockchain-Gods/node-defenders-frontend) — NextJS frontend shell
 

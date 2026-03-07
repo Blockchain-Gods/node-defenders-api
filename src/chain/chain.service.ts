@@ -82,7 +82,7 @@ private async registerListeners(contracts: typeof fujiDeployment.contracts) {
     return balance.toString();
   }
 
- private async syncMarketplaceListings() {
+  async syncMarketplaceListings() {
   const { contracts } = fujiDeployment;
   const upgradeNFT = UpgradeNFT__factory.connect(contracts.UpgradeNFT, this.provider);
   const marketplace = Marketplace__factory.connect(contracts.Marketplace, this.provider);
