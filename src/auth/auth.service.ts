@@ -25,15 +25,15 @@ export class AuthService {
     private readonly players: PlayerService,
   ) {}
 
-  async loginAsGuest(): Promise<{ token: string; playerId: string; wallet: string }> {
-  const player = await this.players.createGuest();
+async loginAsGuest() {
+  const { player, welcomeTokenId } = await this.players.createGuest();
 
   const token = this.jwt.sign(
     { sub: player.id, wallet: player.walletAddress },
     { secret: this.config.get<string>('jwt.secret') },
   );
 
-  return { token, playerId: player.id, wallet: player.walletAddress };
+  return { token, playerId: player.id, wallet: player.walletAddress, welcomeTokenId };
 }
 
   async login(dto: LoginDto): Promise<{ token: string; playerId: string; wallet: string }> {

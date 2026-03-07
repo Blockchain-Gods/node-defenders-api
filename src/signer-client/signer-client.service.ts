@@ -43,10 +43,10 @@ export class SignerClientService {
     });
   }
 
-  async createWallet(playerId: string): Promise<{ address: string }> {
-    const { data } = await this.http.post('/wallet/create', { playerId });
-    return data;
-  }
+async createWallet(playerId: string): Promise<{ address: string; welcomeTokenId?: string }> {
+  const { data } = await this.http.post('/wallet/create', { playerId });
+  return data;
+}
 
   async mintSoulNow(params: MintSoulParams): Promise<{ txHash: string }> {
     const { data } = await this.http.post('/mint/soul/now', params);
