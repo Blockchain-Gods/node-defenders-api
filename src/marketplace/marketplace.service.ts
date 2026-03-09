@@ -67,7 +67,6 @@ export class MarketplaceService {
       playerId,
       action: 'rent',
       typeId,
-      tierId,
       paymentToken,
     });
 
