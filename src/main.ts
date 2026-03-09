@@ -6,17 +6,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    origin: (origin, callback) => {
-      const allowed = process.env.ALLOWED_ORIGINS?.split(',') ?? [];
-      const isAllowed =
-        !origin ||
-        allowed.includes(origin) ||
-        /^https:\/\/[a-z0-9]+\.node-defenders-frontend\.pages\.dev$/.test(origin);
-      callback(null, isAllowed);
-    },
-    credentials: true,
+    origin: process.env.ALLOWED_ORIGINS?.split(',').map(o => o.trim()) ?? '*',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'x-api-key'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
   });
 
   await app.listen(process.env.PORT ?? 3000);
