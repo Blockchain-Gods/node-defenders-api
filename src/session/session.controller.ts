@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import type { Request } from 'express';
 import { SessionService } from './session.service';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { CurrentPlayer } from '../common/decorators/player.decorator';
@@ -27,8 +28,9 @@ export class SessionController {
   async start(
     @Body() body: StartSessionDto,
     @CurrentPlayer() player: JwtPayload,
+     @Req() req: Request,
   ) {
-    return this.sessions.startSession(player.sub, body.gameId, body.modeId);
+    return this.sessions.startSession(player.sub, body.gameId, body.modeId, req);
   }
 
   @Post('earn')
