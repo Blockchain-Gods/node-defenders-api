@@ -1,7 +1,9 @@
 import { Injectable, Logger, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Request } from 'express';
 import { PrismaService } from '../prisma/prisma.service';
 import { RedisService } from '../redis/redis.service';
 import { SignerClientService } from '../signer-client/signer-client.service';
+import { AnalyticsService } from '../analytics/analytics.service';
 import { ethers } from 'ethers';
 
 const SOUL_SESSION_KEY = (sessionId: string) => `soul:session:${sessionId}`;
@@ -15,9 +17,10 @@ export class SessionService {
     private readonly prisma: PrismaService,
     private readonly redis: RedisService,
     private readonly signer: SignerClientService,
+    private readonly analytics: AnalyticsService,
   ) {}
 
-  async startSession(playerId: string, gameId: number, modeId: number) {
+  async startSession(playerId: string, gameId: number, modeId: number, req: Request) {
     // Abandon any existing active session
     const active = await this.prisma.session.findFirst({
       where: { playerId, status: 'ACTIVE' },
@@ -30,8 +33,10 @@ export class SessionService {
       await this.redis.del(SOUL_SESSION_KEY(active.id));
     }
 
+    const { ipAddress, userAgent } = this.analytics.extract(req);
+
     const session = await this.prisma.session.create({
-      data: { playerId, gameId, modeId },
+      data: { playerId, gameId, modeId, ipAddress, userAgent },
     });
 
     await this.redis.set(SOUL_SESSION_KEY(session.id), '0', SESSION_TTL);
@@ -39,17 +44,17 @@ export class SessionService {
     return session;
   }
 
-async earnSoul(sessionId: string, amount: string) {
-  const session = await this.prisma.session.findUnique({
-    where: { id: sessionId },
-  });
-  if (!session) throw new NotFoundException('Session not found');
-  if (session.status !== 'ACTIVE') throw new BadRequestException('Session not active');
+  async earnSoul(sessionId: string, amount: string) {
+    const session = await this.prisma.session.findUnique({
+      where: { id: sessionId },
+    });
+    if (!session) throw new NotFoundException('Session not found');
+    if (session.status !== 'ACTIVE') throw new BadRequestException('Session not active');
 
-  const key = SOUL_SESSION_KEY(sessionId);
-  const newBalance = await this.redis.incrbyfloat(key, parseFloat(amount));
-  return { sessionSoulBalance: newBalance };
-}
+    const key = SOUL_SESSION_KEY(sessionId);
+    const newBalance = await this.redis.incrbyfloat(key, parseFloat(amount));
+    return { sessionSoulBalance: newBalance };
+  }
 
   async endSession(sessionId: string, playerId: string) {
     const session = await this.prisma.session.findUnique({
@@ -86,9 +91,10 @@ async earnSoul(sessionId: string, amount: string) {
     //   playerId,
     //   amount: earned.toString(),
     // });
-if (earned > 0n) {
-  await this.signer.mintSoulNow({ playerId, amount: earned.toString() });
-}
+    if (earned > 0n) {
+      await this.signer.mintSoulNow({ playerId, amount: earned.toString() });
+    }
+
     // Clean up Redis
     await this.redis.del(key);
 

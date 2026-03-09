@@ -99,7 +99,9 @@ export const SessionScalarFieldEnum = {
   startedAt: 'startedAt',
   endedAt: 'endedAt',
   soulEarned: 'soulEarned',
-  status: 'status'
+  status: 'status',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]

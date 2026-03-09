@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: node-defenders-api
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: node dist/main.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false          # enter manually in Render dashboard
+      - key: REDIS_URL
+        sync: false          # Upstash Redis URL
+      - key: SIGNER_BASE_URL
+        sync: false          # URL of your deployed node-defenders-signer
+      - key: JWT_SECRET
+        generateValue: true  # Render auto-generates a secure value
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: INTERNAL_API_KEY
+        sync: false          # must match the value set in node-defenders-signer
+      - key: FUJI_RPC_URL
+        value: https://api.avax-test.network/ext/bc/C/rpc
+      - key: FUJI_WSS_URL
+        value: wss://api.avax-test.network/ext/bc/C/ws
+      - key: WEB3AUTH_JWKS_URL
+        value: https://api.openlogin.com/jwks
+      - key: GAME_ID
+        value: 1
+      - key: SURVIVAL_MODE_ID
+        value: 1
+      - key: PORT
+        value: 3000

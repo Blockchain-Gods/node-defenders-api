@@ -45,6 +45,8 @@ export type SessionMinAggregateOutputType = {
   endedAt: Date | null
   soulEarned: string | null
   status: $Enums.SessionStatus | null
+  ipAddress: string | null
+  userAgent: string | null
 }
 
 export type SessionMaxAggregateOutputType = {
@@ -56,6 +58,8 @@ export type SessionMaxAggregateOutputType = {
   endedAt: Date | null
   soulEarned: string | null
   status: $Enums.SessionStatus | null
+  ipAddress: string | null
+  userAgent: string | null
 }
 
 export type SessionCountAggregateOutputType = {
@@ -67,6 +71,8 @@ export type SessionCountAggregateOutputType = {
   endedAt: number
   soulEarned: number
   status: number
+  ipAddress: number
+  userAgent: number
   _all: number
 }
 
@@ -90,6 +96,8 @@ export type SessionMinAggregateInputType = {
   endedAt?: true
   soulEarned?: true
   status?: true
+  ipAddress?: true
+  userAgent?: true
 }
 
 export type SessionMaxAggregateInputType = {
@@ -101,6 +109,8 @@ export type SessionMaxAggregateInputType = {
   endedAt?: true
   soulEarned?: true
   status?: true
+  ipAddress?: true
+  userAgent?: true
 }
 
 export type SessionCountAggregateInputType = {
@@ -112,6 +122,8 @@ export type SessionCountAggregateInputType = {
   endedAt?: true
   soulEarned?: true
   status?: true
+  ipAddress?: true
+  userAgent?: true
   _all?: true
 }
 
@@ -210,6 +222,8 @@ export type SessionGroupByOutputType = {
   endedAt: Date | null
   soulEarned: string
   status: $Enums.SessionStatus
+  ipAddress: string | null
+  userAgent: string | null
   _count: SessionCountAggregateOutputType | null
   _avg: SessionAvgAggregateOutputType | null
   _sum: SessionSumAggregateOutputType | null
@@ -244,6 +258,8 @@ export type SessionWhereInput = {
   endedAt?: Prisma.DateTimeNullableFilter<"Session"> | Date | string | null
   soulEarned?: Prisma.StringFilter<"Session"> | string
   status?: Prisma.EnumSessionStatusFilter<"Session"> | $Enums.SessionStatus
+  ipAddress?: Prisma.StringNullableFilter<"Session"> | string | null
+  userAgent?: Prisma.StringNullableFilter<"Session"> | string | null
   player?: Prisma.XOR<Prisma.PlayerScalarRelationFilter, Prisma.PlayerWhereInput>
 }
 
@@ -256,6 +272,8 @@ export type SessionOrderByWithRelationInput = {
   endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   soulEarned?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  ipAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  userAgent?: Prisma.SortOrderInput | Prisma.SortOrder
   player?: Prisma.PlayerOrderByWithRelationInput
 }
 
@@ -271,6 +289,8 @@ export type SessionWhereUniqueInput = Prisma.AtLeast<{
   endedAt?: Prisma.DateTimeNullableFilter<"Session"> | Date | string | null
   soulEarned?: Prisma.StringFilter<"Session"> | string
   status?: Prisma.EnumSessionStatusFilter<"Session"> | $Enums.SessionStatus
+  ipAddress?: Prisma.StringNullableFilter<"Session"> | string | null
+  userAgent?: Prisma.StringNullableFilter<"Session"> | string | null
   player?: Prisma.XOR<Prisma.PlayerScalarRelationFilter, Prisma.PlayerWhereInput>
 }, "id">
 
@@ -283,6 +303,8 @@ export type SessionOrderByWithAggregationInput = {
   endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   soulEarned?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  ipAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  userAgent?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SessionCountOrderByAggregateInput
   _avg?: Prisma.SessionAvgOrderByAggregateInput
   _max?: Prisma.SessionMaxOrderByAggregateInput
@@ -302,6 +324,8 @@ export type SessionScalarWhereWithAggregatesInput = {
   endedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Session"> | Date | string | null
   soulEarned?: Prisma.StringWithAggregatesFilter<"Session"> | string
   status?: Prisma.EnumSessionStatusWithAggregatesFilter<"Session"> | $Enums.SessionStatus
+  ipAddress?: Prisma.StringNullableWithAggregatesFilter<"Session"> | string | null
+  userAgent?: Prisma.StringNullableWithAggregatesFilter<"Session"> | string | null
 }
 
 export type SessionCreateInput = {
@@ -312,6 +336,8 @@ export type SessionCreateInput = {
   endedAt?: Date | string | null
   soulEarned?: string
   status?: $Enums.SessionStatus
+  ipAddress?: string | null
+  userAgent?: string | null
   player: Prisma.PlayerCreateNestedOneWithoutSessionsInput
 }
 
@@ -324,6 +350,8 @@ export type SessionUncheckedCreateInput = {
   endedAt?: Date | string | null
   soulEarned?: string
   status?: $Enums.SessionStatus
+  ipAddress?: string | null
+  userAgent?: string | null
 }
 
 export type SessionUpdateInput = {
@@ -334,6 +362,8 @@ export type SessionUpdateInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   soulEarned?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   player?: Prisma.PlayerUpdateOneRequiredWithoutSessionsNestedInput
 }
 
@@ -346,6 +376,8 @@ export type SessionUncheckedUpdateInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   soulEarned?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SessionCreateManyInput = {
@@ -357,6 +389,8 @@ export type SessionCreateManyInput = {
   endedAt?: Date | string | null
   soulEarned?: string
   status?: $Enums.SessionStatus
+  ipAddress?: string | null
+  userAgent?: string | null
 }
 
 export type SessionUpdateManyMutationInput = {
@@ -367,6 +401,8 @@ export type SessionUpdateManyMutationInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   soulEarned?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SessionUncheckedUpdateManyInput = {
@@ -378,6 +414,8 @@ export type SessionUncheckedUpdateManyInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   soulEarned?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SessionListRelationFilter = {
@@ -399,6 +437,8 @@ export type SessionCountOrderByAggregateInput = {
   endedAt?: Prisma.SortOrder
   soulEarned?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  ipAddress?: Prisma.SortOrder
+  userAgent?: Prisma.SortOrder
 }
 
 export type SessionAvgOrderByAggregateInput = {
@@ -415,6 +455,8 @@ export type SessionMaxOrderByAggregateInput = {
   endedAt?: Prisma.SortOrder
   soulEarned?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  ipAddress?: Prisma.SortOrder
+  userAgent?: Prisma.SortOrder
 }
 
 export type SessionMinOrderByAggregateInput = {
@@ -426,6 +468,8 @@ export type SessionMinOrderByAggregateInput = {
   endedAt?: Prisma.SortOrder
   soulEarned?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  ipAddress?: Prisma.SortOrder
+  userAgent?: Prisma.SortOrder
 }
 
 export type SessionSumOrderByAggregateInput = {
@@ -499,6 +543,8 @@ export type SessionCreateWithoutPlayerInput = {
   endedAt?: Date | string | null
   soulEarned?: string
   status?: $Enums.SessionStatus
+  ipAddress?: string | null
+  userAgent?: string | null
 }
 
 export type SessionUncheckedCreateWithoutPlayerInput = {
@@ -509,6 +555,8 @@ export type SessionUncheckedCreateWithoutPlayerInput = {
   endedAt?: Date | string | null
   soulEarned?: string
   status?: $Enums.SessionStatus
+  ipAddress?: string | null
+  userAgent?: string | null
 }
 
 export type SessionCreateOrConnectWithoutPlayerInput = {
@@ -549,6 +597,8 @@ export type SessionScalarWhereInput = {
   endedAt?: Prisma.DateTimeNullableFilter<"Session"> | Date | string | null
   soulEarned?: Prisma.StringFilter<"Session"> | string
   status?: Prisma.EnumSessionStatusFilter<"Session"> | $Enums.SessionStatus
+  ipAddress?: Prisma.StringNullableFilter<"Session"> | string | null
+  userAgent?: Prisma.StringNullableFilter<"Session"> | string | null
 }
 
 export type SessionCreateManyPlayerInput = {
@@ -559,6 +609,8 @@ export type SessionCreateManyPlayerInput = {
   endedAt?: Date | string | null
   soulEarned?: string
   status?: $Enums.SessionStatus
+  ipAddress?: string | null
+  userAgent?: string | null
 }
 
 export type SessionUpdateWithoutPlayerInput = {
@@ -569,6 +621,8 @@ export type SessionUpdateWithoutPlayerInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   soulEarned?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SessionUncheckedUpdateWithoutPlayerInput = {
@@ -579,6 +633,8 @@ export type SessionUncheckedUpdateWithoutPlayerInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   soulEarned?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SessionUncheckedUpdateManyWithoutPlayerInput = {
@@ -589,6 +645,8 @@ export type SessionUncheckedUpdateManyWithoutPlayerInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   soulEarned?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumSessionStatusFieldUpdateOperationsInput | $Enums.SessionStatus
+  ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -602,6 +660,8 @@ export type SessionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   endedAt?: boolean
   soulEarned?: boolean
   status?: boolean
+  ipAddress?: boolean
+  userAgent?: boolean
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["session"]>
 
@@ -614,6 +674,8 @@ export type SessionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   endedAt?: boolean
   soulEarned?: boolean
   status?: boolean
+  ipAddress?: boolean
+  userAgent?: boolean
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["session"]>
 
@@ -626,6 +688,8 @@ export type SessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   endedAt?: boolean
   soulEarned?: boolean
   status?: boolean
+  ipAddress?: boolean
+  userAgent?: boolean
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["session"]>
 
@@ -638,9 +702,11 @@ export type SessionSelectScalar = {
   endedAt?: boolean
   soulEarned?: boolean
   status?: boolean
+  ipAddress?: boolean
+  userAgent?: boolean
 }
 
-export type SessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerId" | "gameId" | "modeId" | "startedAt" | "endedAt" | "soulEarned" | "status", ExtArgs["result"]["session"]>
+export type SessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playerId" | "gameId" | "modeId" | "startedAt" | "endedAt" | "soulEarned" | "status" | "ipAddress" | "userAgent", ExtArgs["result"]["session"]>
 export type SessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   player?: boolean | Prisma.PlayerDefaultArgs<ExtArgs>
 }
@@ -665,6 +731,8 @@ export type $SessionPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     endedAt: Date | null
     soulEarned: string
     status: $Enums.SessionStatus
+    ipAddress: string | null
+    userAgent: string | null
   }, ExtArgs["result"]["session"]>
   composites: {}
 }
@@ -1097,6 +1165,8 @@ export interface SessionFieldRefs {
   readonly endedAt: Prisma.FieldRef<"Session", 'DateTime'>
   readonly soulEarned: Prisma.FieldRef<"Session", 'String'>
   readonly status: Prisma.FieldRef<"Session", 'SessionStatus'>
+  readonly ipAddress: Prisma.FieldRef<"Session", 'String'>
+  readonly userAgent: Prisma.FieldRef<"Session", 'String'>
 }
     
 

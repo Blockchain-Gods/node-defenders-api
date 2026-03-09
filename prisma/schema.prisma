@@ -5,9 +5,9 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  provider      = "prisma-client"
   moduleFormat  = "commonjs"
-   output   = "../src/generated/prisma"
+  output        = "../src/generated/prisma"
 }
 
 datasource db {
@@ -40,6 +40,8 @@ model Session {
   endedAt     DateTime?
   soulEarned  String        @default("0")
   status      SessionStatus @default(ACTIVE)
+  ipAddress   String?       // captured per session for analytics
+  userAgent   String?       // browser/device info for analytics
 
   player Player @relation(fields: [playerId], references: [id])
 }
@@ -73,13 +75,13 @@ model MarketplaceItem {
 }
 
 model MarketplaceListing {
-  id           String  @id @default(uuid())
-  itemId       String  @unique
-  buyPriceSoul String
-  buyPriceGods String
-  rentPriceSoul String  @default("0") 
-  rentPriceGods String  @default("0")   
-  listed       Boolean @default(true)
+  id            String  @id @default(uuid())
+  itemId        String  @unique
+  buyPriceSoul  String
+  buyPriceGods  String
+  rentPriceSoul String  @default("0")
+  rentPriceGods String  @default("0")
+  listed        Boolean @default(true)
 
   item MarketplaceItem @relation(fields: [itemId], references: [id])
 }

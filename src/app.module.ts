@@ -12,6 +12,8 @@ import { SoulModule } from './soul/soul.module';
 import { LeaderboardModule } from './leaderboard/leaderboard.module';
 import { MarketplaceModule } from './marketplace/marketplace.module';
 import { ChainModule } from './chain/chain.module';
+import { AnalyticsModule } from './analytics/analytics.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { ChainModule } from './chain/chain.module';
     LeaderboardModule,
     MarketplaceModule,
     ChainModule,
+    AnalyticsModule,
+    HealthModule
   ],
 })
 export class AppModule {}
