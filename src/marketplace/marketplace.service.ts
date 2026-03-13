@@ -44,7 +44,9 @@ export class MarketplaceService {
 
     // Deduct SOUL from player balance if paid with SOUL
     if (paymentToken === 'SOUL') {
-      const player = await this.prisma.player.findUnique({ where: { id: playerId } });
+      const player = await this.prisma.player.findUnique({
+        where: { id: playerId },
+      });
       const current = BigInt(player?.soulBalance ?? '0');
       const cost = BigInt(listing.buyPriceSoul);
       await this.prisma.player.update({
@@ -53,7 +55,9 @@ export class MarketplaceService {
       });
     }
 
-    this.logger.log(`Player ${playerId} bought typeId ${typeId}. tx: ${result.txHash}`);
+    this.logger.log(
+      `Player ${playerId} bought typeId ${typeId}. tx: ${result.txHash}`,
+    );
     return result;
   }
 
@@ -67,6 +71,7 @@ export class MarketplaceService {
       playerId,
       action: 'rent',
       typeId,
+      tierId: tierId || 1,
       paymentToken,
     });
 
@@ -79,7 +84,9 @@ export class MarketplaceService {
       },
     });
 
-    this.logger.log(`Player ${playerId} rented typeId ${typeId}. tx: ${result.txHash}`);
+    this.logger.log(
+      `Player ${playerId} rented typeId ${typeId}. tx: ${result.txHash}`,
+    );
     return result;
   }
 
@@ -92,14 +99,18 @@ export class MarketplaceService {
       gameId: number;
       buyPriceSoul: string;
       buyPriceGods: string;
-      rentPriceSoul:string;
-      rentPriceGods:string;
+      rentPriceSoul: string;
+      rentPriceGods: string;
     }>,
   ) {
     for (const item of items) {
       const existing = await this.prisma.marketplaceItem.upsert({
         where: { typeId: item.typeId },
-        update: { name: item.name, metadataURI: item.metadataURI, active: true },
+        update: {
+          name: item.name,
+          metadataURI: item.metadataURI,
+          active: true,
+        },
         create: {
           typeId: item.typeId,
           name: item.name,
@@ -111,16 +122,19 @@ export class MarketplaceService {
 
       await this.prisma.marketplaceListing.upsert({
         where: { itemId: existing.id },
-        update: { buyPriceSoul: item.buyPriceSoul, buyPriceGods: item.buyPriceGods,
-             rentPriceSoul: item.rentPriceSoul,   // new
-    rentPriceGods: item.rentPriceGods,   // new
-            listed: true },
+        update: {
+          buyPriceSoul: item.buyPriceSoul,
+          buyPriceGods: item.buyPriceGods,
+          rentPriceSoul: item.rentPriceSoul, // new
+          rentPriceGods: item.rentPriceGods, // new
+          listed: true,
+        },
         create: {
           itemId: existing.id,
           buyPriceSoul: item.buyPriceSoul,
           buyPriceGods: item.buyPriceGods,
-           rentPriceSoul: item.rentPriceSoul,   // new
-    rentPriceGods: item.rentPriceGods,   // new
+          rentPriceSoul: item.rentPriceSoul, // new
+          rentPriceGods: item.rentPriceGods, // new
         },
       });
     }
